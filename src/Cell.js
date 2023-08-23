@@ -17,12 +17,32 @@ export default function Cell(props) {
   }
   function HandleClick(event) {
     setClicked(true);
-    setShow(true);
+    var s = props.state.slice();
+    var c = GetCoordinates(props.index);
+    console.log(s);
+    s[c[0]][c[1]] = props.turn;
+    setState(s);
+    console.log(props.state);
     if (value == "X") {
       props.setTurn("O");
     } else {
       props.setTurn("X");
     }
+  }
+
+  function GetCoordinates(key) {
+    var m = [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+      [1, 0],
+      [1, 1],
+      [1, 2],
+      [2, 0],
+      [2, 1],
+      [2, 2],
+    ];
+    return m[key - 1];
   }
 
   return (
@@ -33,7 +53,7 @@ export default function Cell(props) {
       onMouseLeave={HandleMouseLeave}
       onClick={HandleClick}
     >
-      <p>{show ? value : null}</p>
+      <p>{clicked ? value : show ? value : null}</p>
     </div>
   );
 }
